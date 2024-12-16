@@ -1,0 +1,23 @@
+{
+  "name": "algorithm-practice",
+  "version": "1.0.0",
+  "description": "Algorithm practice project with TypeScript and Jest",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest myArray/*.spec.ts --colors --verbose=false",
+    "test:watch": "jest --watch"
+  },
+  "keywords": ["algorithms", "typescript", "jest"],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^29.5.11",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "eslint": "^8.56.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.3.3"
+  }
+}
