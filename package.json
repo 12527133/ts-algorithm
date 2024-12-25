@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "test": "jest myArray/*.spec.ts --colors --verbose=false",
+    "test": "jest oddEven/*.spec.ts --colors --verbose=false",
     "test:watch": "jest --watch"
   },
   "keywords": ["algorithms", "typescript", "jest"],
