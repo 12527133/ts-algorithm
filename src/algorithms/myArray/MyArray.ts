@@ -1,5 +1,5 @@
-export default class MyArray {
-    data:Array<number>;
+export default class MyArray<T> {
+    data:Array<T>;
     size:number;
     capitacity:number;
 
@@ -9,17 +9,13 @@ export default class MyArray {
         this.capitacity = capitacity;
     }
 
-    add(e:number):number {
-       return this.addAtIndex(e,this.size);
+    add(e:T):T {
+       return this.addAtIndex(this.size,e);
     }
  
-    addAtIndex(e:number,index:number):number {
-        if (this.size === this.capitacity) {
-            throw new Error('addLast failed, array is full');
-        }
-        if (index < 0 || index > this.size) {
-            throw new Error('add failed, index is illegal');
-        }
+    addAtIndex(index:number,e:T):T {
+        this.checkIndex(index);
+        this.expandSize();
         if (index !== this.size) {
             for (let i = this.size - 1; i >= index; i--) {
                 this.data[i + 1] = this.data[i];
@@ -32,15 +28,46 @@ export default class MyArray {
         return e;
     }
 
-    removeAtIndex(index:number):void {
-        if (index < 0 || index >= this.size) {
-            throw new Error('remove failed, index is illegal');
+    checkIndex(index:number):void {
+        if (index < 0 || index > this.size) {
+            throw new Error('getByIndex failed, index is illegal');
         }
+    }
+
+    removeAtIndex(index:number):void {
+        this.checkIndex(index);
+        this.shrinkSize();
         //1,2  remove 1
         for (let i = index + 1; i < this.size; i++) {
             this.data[i - 1] = this.data[i];
         }
         this.size--;
+    }
+
+    expandSize():void {
+        if (this.size < this.capitacity) {
+            return;
+        }
+        const newData = new Array(this.capitacity * 2);
+        for (let i = 0; i < this.size; i++) {
+            newData[i] = this.data[i];
+        }
+        this.data = newData;
+        this.capitacity = this.capitacity * 2;
+        console.log('expandSize:'+this.capitacity);
+    }
+    shrinkSize():void {
+        if (this.size >= this.capitacity/2) {
+            return;
+        }
+        const newSize = this.capitacity / 2;
+        const newData = new Array(newSize);
+        for (let i = 0; i < this.data.length; i++) {
+            newData[i] = this.data[i];
+        }
+        this.data = newData;
+        this.capitacity = newSize;
+        console.log('shrinkSize:'+this.capitacity);
     }
     remove(index:number):void {
        this.removeAtIndex(index);
@@ -51,7 +78,7 @@ export default class MyArray {
     getCapitacity():number {
         return this.capitacity;
     }
-    getByIndex(index:number):number {
+    getByIndex(index:number):T {
         if (index < 0 || index >= this.size) {
             throw new Error('getByIndex failed, index is illegal');
         }
